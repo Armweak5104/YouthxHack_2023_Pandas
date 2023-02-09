@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 const salt = bcrypt.genSaltSync(10);
 
-class SignUpPage extends React.Component {
+class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.props.setTitle("Sign Up");
@@ -163,4 +163,4 @@ class SignUpPage extends React.Component {
     }
 }
 
-export default SignUpPage;
+export default SignUp;
