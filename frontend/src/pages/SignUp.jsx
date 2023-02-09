@@ -81,7 +81,7 @@ class SignUp extends React.Component {
         // TODO: Check if placeid / address is valid
     }
 
-    submitData = () => {
+    submitData = async () => {
         var submitObj = {
             "name": this.state.name,
             "phone_num": this.state.phoneNum,
@@ -90,12 +90,20 @@ class SignUp extends React.Component {
             "address": this.state.placeId
         }
 
-        fetch("/api/users/", {
+        await fetch("/api/users/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(submitObj)
+        })
+        .then((res) => res.json())
+        .then(async (json) => {
+            const data = await json;
+            // Assign user ID cookie
+            document.cookie = `userID=${data.id}; SameSite=Strict`;
+            // Go to home page
+            window.location = "/";
         })
         .catch((err) => {
             console.error(err);
