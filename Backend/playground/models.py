@@ -6,7 +6,7 @@ class User(models.Model):
     phone_num  = models.CharField(max_length = 200, null = False, blank = False)
     password  = models.TextField()
     donor = models.BooleanField()
-    inventory = models.TextField()
+    inventory = models.TextField(blank = True)
     address = models.TextField()
     
     def __str__(self):

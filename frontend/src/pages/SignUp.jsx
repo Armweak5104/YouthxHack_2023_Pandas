@@ -10,11 +10,11 @@ class SignUp extends React.Component {
         this.state = {
             signUpStage: 0,
             userType: "donor",
-            name: "",
-            phoneNum: "",
+            name: "Dylan",
+            phoneNum: "98382415",
             password: "",
-            address: "",
-            postalCode: "",
+            address: "30A Kallang Place, #05-05",
+            postalCode: "339213",
             placeId: ""
         }
     }
@@ -77,21 +77,33 @@ class SignUp extends React.Component {
                 this.submitData();
             });
         });
+
+        // TODO: Check if placeid / address is valid
     }
 
     submitData = () => {
         var submitObj = {
             "name": this.state.name,
-            "phoneNum": this.state.phoneNum,
+            "phone_num": this.state.phoneNum,
             "password": bcrypt.hashSync(this.state.password, salt),
-            "placeId": this.state.placeId,
-            "isDonor": (this.state.userType === "donor")
+            "donor": (this.state.userType === "donor"),
+            "address": this.state.placeId
         }
-        console.log(submitObj);
-        // TODO: Send obj to REST API
+
+        fetch("/api/users/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submitObj)
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     handleSubmit = async (e) => {
+        // TODO: Check inputs
         // Validate address and get placeId
         await this.validateAddress();
     }
