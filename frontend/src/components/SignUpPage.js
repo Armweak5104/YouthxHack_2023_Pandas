@@ -12,8 +12,9 @@ class SignUpPage extends React.Component {
             name: "",
             phoneNum: 0,
             password: "",
-            address: "",
-            postalCode: 0
+            address: "130 Tanjong Rhu Road, Lobby J, #02-02",
+            postalCode: 436918,
+            placeId: ""
         }
     }
 
@@ -49,37 +50,49 @@ class SignUpPage extends React.Component {
         this.setState({signUpStage : this.state.signUpStage - 1});
     }
 
-    validateAddress = () => {
+    validateAddress = async () => {
+        // Create object to convert to JSON body
         var addressObj = {
             "address": {
                 "regionCode": "SG",
-                "postalCode": this.state.postalCode,
+                "postalCode": this.state.postalCode.toString(),
                 "addressLines": [this.state.address]
             }
         };
-        console.log(addressObj);
 
-        fetch("https://addressvalidation.googleapis.com/v1:validateAddress?key=AIzaSyBpjghxmYKMUsrECGSErgIZy-vTWhpUlIc", {
+        // Send POST request to Google Maps Address Validation API
+        await fetch("https://addressvalidation.googleapis.com/v1:validateAddress?key=AIzaSyBpjghxmYKMUsrECGSErgIZy-vTWhpUlIc", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application-json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(addressObj)
         })
-        .then((data) => {
-            console.log(data);
+        .then((response) => response.json())
+        .then(async (json) => {
+            const data = await json;
+            // Store the returning placeId in state
+            this.setState({placeId : data.result.geocode.placeId}, () => {
+                this.submitData();
+            });
         });
     }
 
-    handleSubmit = (e) => {
-        // Get geo string
-        this.validateAddress();
-//        var submitObj = {
-//            "name": this.state.name,
-//            "phoneNum": this.state.phoneNum,
-//            "password": bcrypt.hashSync(this.state.password, salt)
-//        }
-//        console.log(submitObj.password);
+    submitData = () => {
+        var submitObj = {
+            "name": this.state.name,
+            "phoneNum": this.state.phoneNum,
+            "password": bcrypt.hashSync(this.state.password, salt),
+            "placeId": this.state.placeId,
+            "isDonor": (this.state.userType === "donor")
+        }
+        console.log(submitObj);
+        // TODO: Send obj to REST API
+    }
+
+    handleSubmit = async (e) => {
+        // Validate address and get placeId
+        await this.validateAddress();
     }
 
     render() {
