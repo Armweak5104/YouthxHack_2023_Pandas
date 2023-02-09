@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class addUser(models.Model):
+class User(models.Model):
     name  = models.CharField(max_length = 200, null = False, blank = False)
     phone_num  = models.CharField(max_length = 200, null = False, blank = False)
     password  = models.TextField()
