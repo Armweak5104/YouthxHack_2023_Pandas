@@ -1,4 +1,9 @@
-/* Prevent arrows from appearing in input fields */
+:root {
+  --navbar-height: 50px;
+  --theme-green: #27db72;
+}
+
+/* Prevent arrows from appearing in number input fields */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -22,6 +27,90 @@ code {
     monospace;
 }
 
-.signup-page {
+/* NavBar */
+.navbar {
+  background-color: var(--theme-green);
+  width: 100vw;
+  height: var(--navbar-height);
+  box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(41, 41, 41);
+}
 
+/* Sign up page */
+.signup-page {
+  width: 100vw;
+  height: calc(100vh - var(--navbar-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-page label {
+  display: block;
+}
+
+.signup-page-container {
+  padding: 90px;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.signup-page-input-container {
+  width: 14vw;
+  margin-bottom: 20px;
+}
+
+.signup-page-input-container label {
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(41, 41, 41);
+}
+
+.signup-page-input-container input {
+  width: calc(100% - 8px);
+  outline: none;
+}
+
+.signup-page-input-container select {
+  width: 100%;
+  border: none;
+  padding: 10px;
+}
+
+.signup-page-button-container {
+  display: grid;
+  grid-template-columns: 5vw calc(100% - 10vw) 5vw;
+}
+
+.signup-page-button-container button {
+  padding: 5px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(41, 41, 41);
+  background-color: var(--theme-green);
+  transition: scale 201ms ease-in-out;
+}
+
+.signup-page-button-container button:hover {
+  scale: 1.1;
+  transition: scale 200ms ease-in-out;
+}
+
+.signup-page-button-container button:active {
+  scale: 0.9;
+  transition: scale 200ms ease-in-out;
+}
+
+.signup-page-button--1 {
+  grid-column: 1;
+}
+
+.signup-page-button--2 {
+  grid-column: 3;
 }

@@ -5,15 +5,16 @@ const salt = bcrypt.genSaltSync(10);
 
 class SignUpPage extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.props.setTitle("Sign Up");
         this.state = {
             signUpStage: 0,
             userType: "donor",
             name: "",
-            phoneNum: 0,
+            phoneNum: "",
             password: "",
-            address: "130 Tanjong Rhu Road, Lobby J, #02-02",
-            postalCode: 436918,
+            address: "",
+            postalCode: "",
             placeId: ""
         }
     }
@@ -99,48 +100,61 @@ class SignUpPage extends React.Component {
         switch(this.state.signUpStage) {
             case 0:
                 return(
-                    <div>
-                        <label>You are a ...</label>
-                        <select value={this.state.userType} onChange={this.handleUserTypeChange}>
-                            <option value="donor">Donor</option>
-                            <option value="recepient">Recepient</option>
-                        </select>
-                        <button onClick={this.prevStage}>{'<'} Back</button>
-                        <button onClick={this.nextStage}>Next {'>'}</button>
+                    <div className="signup-page">
+                        <div className="signup-page-container">
+                            <div className="signup-page-input-container">
+                                <label>You are a ...</label>
+                                <select value={this.state.userType} onChange={this.handleUserTypeChange}>
+                                    <option value="donor">Donor</option>
+                                    <option value="recepient">Recepient</option>
+                                </select>
+                            </div>
+                            <div className="signup-page-button-container">
+                                <button className="signup-page-button--2" onClick={this.nextStage}>Next {'>'}</button>
+                            </div>
+                        </div>
                     </div>
                 );
             case 1:
                 return(
-                    <div>
-                        <div>
-                            <label>Name</label>
-                            <input type="text" value={this.state.name} onChange={this.handleUserNameChange}/>
+                    <div className="signup-page">
+                        <div className="signup-page-container">
+                            <div className="signup-page-input-container">
+                                <label>Name</label>
+                                <input type="text" value={this.state.name} onChange={this.handleUserNameChange}/>
+                            </div>
+                            <div className="signup-page-input-container">
+                                <label>Phone Number</label>
+                                <input type="number" value={this.state.phoneNum} onChange={this.handlePhoneNumChange}/>
+                            </div>
+                            <div className="signup-page-input-container">
+                                <label>Password</label>
+                                <input type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+                            </div>
+                            <div className="signup-page-button-container">
+                                <button className="signup-page-button--1" onClick={this.prevStage}>{'<'} Back</button>
+                                <button className="signup-page-button--2" onClick={this.nextStage}>Next {'>'}</button>
+                            </div>
                         </div>
-                        <div>
-                            <label>Phone Number</label>
-                            <input type="number" value={this.state.phoneNum} onChange={this.handlePhoneNumChange}/>
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <input type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
-                        </div>
-                        <button onClick={this.prevStage}>{'<'} Back</button>
-                        <button onClick={this.nextStage}>Next {'>'}</button>
                     </div>
                 );
             case 2:
                 return(
-                    <div>
-                        <div>
-                            <label>Address</label>
-                            <input type="text" value={this.state.address} onChange={this.handleAddressChange}/>
+                    <div className="signup-page">
+                        <div className="signup-page-container">
+                            <div className="signup-page-input-container">
+                                <label>Address</label>
+                                <input type="text" value={this.state.address} onChange={this.handleAddressChange}/>
+                            </div>
+                            <div className="signup-page-input-container">
+                                <label>Postal Code</label>
+                                <input type="number" value={this.state.postalCode} onChange={this.handlePostalCodeChange}/>
+                            </div>
+                            <div className="signup-page-button-container">
+                                <button className="signup-page-button--1" onClick={this.prevStage}>{'<'} Back</button>
+                                <button style={{backgroundColor: "#f27495", color: "white"}} className="signup-page-button--2" onClick={this.handleSubmit}>Submit</button>
+                            </div>
                         </div>
-                        <div>
-                            <label>Postal Code</label>
-                            <input type="number" value={this.state.postalCode} onChange={this.handlePostalCodeChange}/>
-                        </div>
-                        <button onClick={this.prevStage}>{'<'} Back</button>
-                        <button onClick={this.handleSubmit}>Submit</button>
                     </div>
                 );
             default:
