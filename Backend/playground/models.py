@@ -6,7 +6,10 @@ class User(models.Model):
     phone_num  = models.CharField(max_length = 200, null = False, blank = False)
     password  = models.TextField()
     donor = models.BooleanField()
-    inventory = models.TextField(blank = True)
+    need_inventory = False
+    if(donor):
+        need_inventory  = True
+    inventory = models.TextField(blank = need_inventory)
     address = models.TextField()
     
     def __str__(self):
@@ -20,4 +23,8 @@ class Request(models.Model):
     is_accepted = models.BooleanField(default = False)
 
     def __str__(self):
+<<<<<<< HEAD
         return self.food
+=======
+        return self.name
+>>>>>>> a6932e1d0442a8ec8a5611e05e83e49a7d4d911b
