@@ -26,7 +26,7 @@ class Login extends React.Component {
 
     getUserData = async () => {
         var output = null;
-        await fetch(`/api/users?phone_num=${this.state.phoneNum}`)
+        await fetch(`/api1/api/users?phone_num=${this.state.phoneNum}`)
         .then((res) => res.json())
         .then(async (json) => {
             output = await json;

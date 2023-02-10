@@ -5,7 +5,7 @@ from playground import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
-router.register(r'requests', views.UserView, 'request')
+router.register(r'requests', views.RequestView, 'request')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,10 +1,14 @@
 import React from 'react';
+import DonorHomeElem from '../components/DonorHomeElem';
+import RequestHomeElem from '../components/RequestHomeElem';
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDonor: false
+            isDonor: false,
+            userId: null,
+            renderObj: null
         };
     }
     async componentDidMount() {
@@ -13,14 +17,22 @@ class Home extends React.Component {
         // If don't have, redirect to login page
         if(!userIdCookie)
             window.location.replace("/login");
+        else
+            this.setState({userId: userIdCookie});
 
         var data = await this.getUserData(userIdCookie);
-        this.setState({isDonor: data.donor});
+        this.setState({isDonor: data.donor}, () => {
+            if(this.state.isDonor)
+                this.renderDonors();
+            else
+                this.renderRecepients();
+        });
+
     }
 
     getUserData = async (userId) => {
         var output = null;
-        await fetch(`/api/users/${userId}/`)
+        await fetch(`/api1/api/users/${userId}/`)
         .then((res) => res.json())
         .then(async (json) => {
             const data = await json;
@@ -34,7 +46,7 @@ class Home extends React.Component {
 
     getUsersOfTypeData = async (isDonor) => {
         var output = null;
-        await fetch(`/api/users/?is_donor=${this.capitaliseFirstLetter(isDonor.toString())}`)
+        await fetch(`/api1/api/users/?is_donor=${this.capitaliseFirstLetter(isDonor.toString())}`)
         .then((res) => res.json())
         .then(async (json) => {
             const data = await json;
@@ -46,27 +58,40 @@ class Home extends React.Component {
         return output;
     }
 
+    getRequestsOfId = async (donorId) => {
+        var output = null;
+        await fetch(`/api1/api/requests/?donor_id=${donorId}`)
+        .then((res) => res.json())
+        .then(async (json) => {
+            const data = await json;
+            output = data;
+        })
+        .catch((err) => console.error(err));
+        return output;
+    }
+
     capitaliseFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     renderDonors = async () => {
-        var recepients = await this.getUsersOfTypeData(false);
-        console.log(recepients);
-        return(
-            <h1>Donor</h1>
-        );
+        var requests = await this.getRequestsOfId(this.state.userId);
+        var requestMap = requests.map((r) => <RequestHomeElem obj={r} key={r.recepient_id} />)
+        this.setState({renderObj: requestMap});
     }
 
     renderRecepients = async () => {
         var donors = await this.getUsersOfTypeData(true);
-        console.log(donors);
-        return(
-            <h1>Recepient</h1>
-        );
+        const donorsMap = donors.map((r) => <DonorHomeElem obj={r} key={r.id} recepientId={this.state.userId} />);
+        this.setState({renderObj: donorsMap});
     }
     
-    async render() {
+    render() {
+        return(
+            <div className="home-page">
+                {this.state.renderObj}
+            </div>
+        );
     }
 }
 

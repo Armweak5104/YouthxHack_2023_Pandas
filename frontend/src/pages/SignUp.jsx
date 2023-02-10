@@ -90,7 +90,7 @@ class SignUp extends React.Component {
             "address": this.state.placeId
         }
 
-        await fetch("/api/users/", {
+        await fetch("/api1/api/users/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

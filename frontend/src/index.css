@@ -114,3 +114,69 @@ code {
 .signup-page-button--2 {
   grid-column: 3;
 }
+
+.donor-home-elem {
+  display: grid;
+  width: 100vw
+}
+
+.recepient-home-data-container {
+  grid-column: 1;
+}
+
+.recepient-home-btn-container {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.recepient-home-btn-container button{
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(41, 41, 41);
+  background-color: var(--theme-green);
+  transition: scale 201ms ease-in-out;
+}
+
+.recepient-home-btn-container button:hover {
+  scale: 1.1;
+  transition: scale 200ms ease-in-out;
+}
+
+.recepient-home-btn-container button:active {
+  scale: 0.9;
+  transition: scale 200ms ease-in-out;
+}
+
+.home-page {
+  padding: 50px;
+}
+
+.recepient-home-inventory-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 10vw 10vw;
+  margin-bottom: 20px;
+}
+
+.recepient-home-inventory-container button{
+  padding: 5px;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(41, 41, 41);
+  background-color: var(--theme-green);
+  transition: scale 201ms ease-in-out;
+}
+
+.recepient-home-inventory-container button:hover {
+  scale: 1.1;
+  transition: scale 200ms ease-in-out;
+}
+
+.recepient-home-inventory-container button:active {
+  scale: 0.9;
+  transition: scale 200ms ease-in-out;
+}

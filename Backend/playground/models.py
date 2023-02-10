@@ -20,4 +20,4 @@ class Request(models.Model):
     is_accepted = models.BooleanField(default = False)
 
     def __str__(self):
-        return self.name
+        return self.food
